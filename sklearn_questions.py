@@ -157,7 +157,7 @@ class RegistrationSplit(BaseCrossValidator):
             The testing set indices for that split.
         """
         # Split into monthly registration folds - TODO
-        if X["registration_month"].dtype != "datetime64[ns]":
+        if not pd.api.types.is_datetime64_any_dtype(X["registration_month"]):
             raise ValueError("registration_month must be of datetime dtype.")
         months = X["registration_month"].dt.to_period("M").reset_index(
             drop=True
